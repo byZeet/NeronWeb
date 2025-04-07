@@ -5,7 +5,9 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="theme-color" content="#282828">
         <title>Nerón Web</title>
-        <link rel="stylesheet" href="build/bundle.css?v=24.12.19">
+        <!-- ERROR 404  -->
+        <!-- <link rel="stylesheet" href="build/bundle.css?v=24.12.19"> -->
+        <!-- EVITAR DOBLE ZOOM ON CLICK -->
         <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
         <link rel="shortcut icon" href="favicon/icon-256.png"  type="image/x-icon"/>
         <link rel="icon" href="favicon/icon-256.png"  type="image/x-icon"/>
@@ -13,6 +15,7 @@
 </head>
 <body>
         <div id="root">
+                
                 <div id='header'>
                         <div class='top-info-wrapper'>
                                 <div class='top-info'>
@@ -517,6 +520,22 @@
                         </div>
                 </div>
         </script>
+        <script>
+                // Bloquear Ctrl + rueda del ratón
+                window.addEventListener('wheel', function(e) {
+                  if (e.ctrlKey) {
+                    e.preventDefault();
+                  }
+                }, { passive: false });
+              
+                // Bloquear Ctrl + (+ - 0)
+                window.addEventListener('keydown', function(e) {
+                  if ((e.ctrlKey || e.metaKey) && ['+', '-', '0', '=', '_'].includes(e.key)) {
+                    e.preventDefault();
+                  }
+                });
+              </script>
+              
         <script src="build/bundle.js?v=24.12.19"></script>
 </body>
 
