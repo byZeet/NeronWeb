@@ -1,0 +1,523 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#282828">
+        <title>Nerón Web</title>
+        <link rel="stylesheet" href="build/bundle.css?v=24.12.19">
+        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+        <link rel="shortcut icon" href="favicon/icon-256.png"  type="image/x-icon"/>
+        <link rel="icon" href="favicon/icon-256.png"  type="image/x-icon"/>
+        <link rel="stylesheet" href="./scss/dark/init.css">
+</head>
+<body>
+        <div id="root">
+                <div id='header'>
+                        <div class='top-info-wrapper'>
+                                <div class='top-info'>
+                                        <span class='commander-name'></span>
+                                        <span class='slash'></span>
+                                        <span class='operator-name'></span>
+                                </div>
+                        </div>
+                        <div class='bottom-info'></div>
+                </div>
+                <div id='panel-container'>
+                        <div id='loading-panel'>
+                                <div class='loading-wrapper'>
+                                        <img class='loading-image' src="img/dark/loading.gif">
+                                        <span class='loading-text'>Cargando...</span>
+                                </div>
+                        </div>
+                </div>
+                <div id='buttons'></div>
+        </div>
+        <div id='modal-wrapper'></div>
+
+        <script id="operator-panel-template" type="text/x-handlebars-template">
+                <div id='operator-panel'/>
+        </script>
+        <script id="place-panel-template" type="text/x-handlebars-template">
+                <div id='place-panel'>
+                        <div class='place-div'/>
+                        <div class='separator'/>
+                        <div class='table-div'/>
+                </div>
+        </script>
+        <script id="order-panel-template" type="text/x-handlebars-template">
+                <div id='order-panel'>
+
+                        <div class='ticket-info'>
+                                <div class='top-info'>
+                                        <div class='left'>
+                                                <span class='place-name'/>
+                                                <span class='table-name'/>
+                                        </div>
+                                        <div class='right'>
+                                                <span class='total-price'/>
+                                                <span class='euro-symbol'>€</span>
+                                        </div>
+                                </div>
+                                <div class='bottom-info'>
+                                        <div class='left'>
+                                                <span class='product-quantity'/>
+                                                <span class='cross'>X</span>
+                                                <span class='product-description'/>
+                                        </div>
+                                        <div class='right'>
+                                                <span class='product-price'/>
+                                                <span class='euro-symbol'>€</span>
+                                        </div>
+                                </div>
+                        </div>
+                        <div class="wrapper family-wrapper">
+                                <div class='family-panel'></div>
+                        </div>
+                        </div>
+                </div>
+        </script>
+        <script id="ticket-panel-template" type="text/x-handlebars-template">
+                <div id='ticket-panel'>
+                        <div class='ticket-wrapper'>
+                                <div class='info'>
+                                        <div class='left'>
+                                                <span class='place-name'/>
+                                                <span class='table-name'/>
+                                        </div>
+                                        <div class='right'>
+                                                <span class='total-price'/>
+                                                <span class='euro-symbol'>€</span>
+                                        </div>
+                                </div>
+                                <div class='ticket'/>
+                        </div>
+                </div>
+        </script>
+        
+        <script id="fast-food-panel-template" type="text/x-handlebars-template">
+                <div id='fast-food-panel'>
+                        <div class='fast-food-name'></div>
+                        <div class='fast-food-info'>
+                                <span class='fast-food-current-item'/>
+                                <span>/</span>
+                                <span class='fast-food-quantity'/>
+                        </div>
+                        <div class='fast-food-content'>
+                                <div class='fast-food-basics-wrapper'>
+                                        <div class='fast-food-header'>
+                                                <img class='fast-food-first-half-img' src="./img/dark/first-half.png">
+                                                <img class='fast-food-second-half-img' src="./img/dark/second-half.png">
+                                                <span>Básicos</span>
+                                        </div>
+                                        <div class='fast-food-basics'/>
+                                </div>
+                                <div class='fast-food-extras-wrapper'>
+                                        <div class='fast-food-header'>
+                                                <div class='prev-button'><img src='./img/dark/left-arrow.png'></div>
+                                                <img class='fast-food-first-half-img' src="./img/dark/first-half.png">
+                                                <img class='fast-food-second-half-img' src="./img/dark/second-half.png">
+                                                <div class='extra-group-description'></div>
+                                                <div class='next-button'><img src='./img/dark/right-arrow.png'></div>
+                                        </div>
+                                        <div class='fast-food-extras'/>
+                                </div>
+                        </div>
+                </div>
+        </script>
+        <script id="calificator-panel-template" type="text/x-handlebars-template">
+                <div id='calificator-panel'>
+                        <div class='calificators-header'>
+                                <div class='prev-button'><img src='./img/dark/left-arrow.png'></div>
+                                <div class='calificator-group'>
+                                        <img class='required-img' src="./img/dark/exclamation.png">
+                                        <div class="calificator-group-description"></div>
+                                </div>
+                                <div class='next-button'><img src='./img/dark/right-arrow.png'></div>
+                        </div>
+                        <div class='calificators-content'/>
+                </div>
+        </script>
+        <script id="menu-panel-template" type="text/x-handlebars-template">
+                <div id='menu-panel'>
+                        <div class='menu-name'></div>
+                        <div class='menu-header'>
+                                <div class='prev-button'><img src='./img/dark/left-arrow.png'></div>
+                                <div class='menu-group-description'/>
+                                <div class='next-button'><img src='./img/dark/right-arrow.png'></div>
+                        </div>
+                        <div class='menu-content'/>
+                </div>
+        </script>
+        <script id="menu-selection-panel-template" type="text/x-handlebars-template">
+                <div id='menu-selection-panel'>
+                        <div class='menu-selection-wrapper'>
+                                <div class='menu-selection-header'>
+                                        <div class='menu-selection-group'/>
+                                        <div class='menu-selection-description'/>
+                                </div>
+                                <div class='menu-selection-lines'/>
+                        </div>
+                </div>
+        </script>
+        <script id="demand-panel-template" type="text/x-handlebars-template">
+                <div id='demand-panel'>
+                        <div class='demand-lines'></div>
+                </div>
+        </script>
+        <script id="sale-closing-panel-template" type="text/x-handlebars-template">
+                <div id='sale-closing-panel'>
+                        <div class='sale-closing-wrapper'>
+                                <div class="total-wrapper">
+                                        <div class="total-label">Total:</div>
+                                        <div class="total"></div>
+                                </div>
+                                <div class="document-type-wrapper sale-closing-group">
+                                        <div>Tipo de documento</div>
+                                        <div class="sale-closing-group-value document-type"></div>
+                                </div>
+                                <div class="payment-way-wrapper sale-closing-group">
+                                        <div>Forma de pago</div>
+                                        <div class="sale-closing-group-value payment-way"></div>
+                                </div>
+                                <div class="first-payment-way-wrapper sale-closing-group">
+                                        <div>Forma de pago (1)</div>
+                                        <div class="sale-closing-group-value first-payment-way"></div>
+                                </div>
+                                <div class="first-price-wrapper sale-closing-group">
+                                        <div>Importe (1)</div>
+                                        <div class="sale-closing-group-value first-price"></div>
+                                </div>
+                                <div class="second-payment-way-wrapper sale-closing-group">
+                                        <div>Forma de pago (2)</div>
+                                        <div class="sale-closing-group-value second-payment-way"></div>
+                                </div>
+                                <div class="second-price-wrapper sale-closing-group">
+                                        <div>Importe (2)</div>
+                                        <div class="sale-closing-group-value second-price"></div>
+                                </div>
+                                <div class="dinners-wrapper sale-closing-group">
+                                        <div>Comensales</div>
+                                        <div class="sale-closing-group-value dinners"></div>
+                                </div>
+                                <div class="client-wrapper sale-closing-group">
+                                        <div>Cliente</div>
+                                        <div class="sale-closing-group-value client"></div>
+                                </div>
+                                <div class="recever-qr-wrapper sale-closing-group">
+                                        <div>QR Recever</div>
+                                        <div class="sale-closing-group-value recever-qr"></div>
+                                </div>
+                                <div class="discount-wrapper sale-closing-group">
+                                        <div>Descuento</div>
+                                        <div class="sale-closing-group-value discount"></div>
+                                </div>
+                                <div class="printing-modifier-wrapper sale-closing-group">
+                                        <div>Modificador de impresión</div>
+                                        <div class="sale-closing-group-value printing-modifier"></div>
+                                </div>
+                                <div class="tin-wrapper sale-closing-group">
+                                        <div>Bote</div>
+                                        <div class="sale-closing-group-value tin"></div>
+                                </div>
+                                <div class="lines-wrapper sale-closing-group">
+                                        <div>Líneas</div>
+                                        <div class="lines"></div>
+                                </div>
+                                <div class="clients-wrapper sale-closing-group">
+                                        <div>Documentos</div>
+                                        <div class="clients"></div>
+                                </div>
+                        </div>
+                </div>
+        </script>
+        <script id="operator-view-template" type="text/x-handlebars-template">
+                <div class='operator-view'>
+                        <img class='operator-image'>
+                        <span class='operator-name'/>
+                </div>
+        </script>
+        <script id="place-view-template" type="text/x-handlebars-template">
+                <div class='place-view'>
+                        <span class='place-name'/>
+                        <div class="icon-wrapper">
+                                <!--<span class="notification-icon">P</span>-->
+                                <img class="notification-icon" src="img/dark/bell.png">
+                        </div>
+                </div>
+        </script>
+        <script id="table-view-template" type="text/x-handlebars-template">
+                <div class='table-view'>
+                        <span class='table-description'/>
+                        <div class="table-total-wrapper">
+                                <span class="table-total"></span>€
+                        </div>
+                        <div class="table-dinners-wrapper">
+                                <span class="table-dinners"></span> Com.
+                        </div>
+                        <div class="icon-wrapper">
+                                <img class="table-icon call-icon" src="img/dark/bell.png">
+                                <img class="table-icon order-icon" src="img/dark/kitchen.png">
+                                <img class="table-icon ticket-icon" src="img/dark/euro.png">
+                        </div>
+                        <div class="reserve-wrapper">
+                                <div class="reserve-time"></div>
+                        </div>
+                </div>
+        </script>
+        <script id="family-view-template" type="text/x-handlebars-template">
+                <div class='family-view square'>
+                        <div class='square-wrapper'>
+                                <img class='family-image'>
+                                <div class='family-description-wrapper'>
+                                        <span class='family-description'/>
+                                </div>
+                        </div>
+                </div>
+        </script>
+        <script id="product-view-template" type="text/x-handlebars-template">
+                <div class='product-view square'>
+                        <div class='square-wrapper'>
+                                <img class='product-image'>
+                                <div class='product-description-wrapper'>
+                                        <span class='product-description'/>
+                                </div>
+                        </div>
+                        <div class="product-stock"></div>
+                        <div class="product-pvp"></div>
+                </div>
+        </script>
+        <script id="fast-food-product-view-template" type="text/x-handlebars-template">
+                <div class='fast-food-product-view'>
+                        <div class='square-wrapper'>
+                                <span class='product-description'/>
+                        </div>
+                </div>
+        </script>
+        <script id="calificator-view-template" type="text/x-handlebars-template">
+                <div class='calificator-view'>
+                        <span class='calificator-description'/>
+                </div>
+        </script>
+        <script id="menu-view-template" type="text/x-handlebars-template">
+                <div class='product-view square'>
+                        <div class='square-wrapper'>
+                                <img class='product-image'>
+                                <div class='product-description-wrapper'>
+                                        <span class='product-description'/>
+                                </div>
+                                <div class='quantity-wrapper'>
+                                        <span class='quantity'/>
+                                </div>
+                                <div class="product-stock"></div>
+                        </div>
+                </div>
+        </script>
+        <script id="ticket-line-view-template" type="text/x-handlebars-template">
+                <div class='ticket-line-view'>
+                        <div class='ticket-line-color-band'/>
+                        <div class='product-quantity'/>
+                        <div class='product-description'/>
+                        <div class='product-price'/>
+                </div>
+        </script>
+        <script id="menu-selection-line-view-template" type="text/x-handlebars-template">
+                <div class='menu-selection-line-view'>
+                        <div class='selection-quantity-wrapper'>
+                                <div class='selection-quantity'/>
+                        </div>
+                        <div class='selection-info'>
+                                <div class='selection-calificators'/>
+                                <div class='selection-ingredients'/>
+                        </div>
+                </div>
+        </script>
+        <script id="demand-line-view-template" type="text/x-handlebars-template">
+                <div class='demand-line-view'>
+                        <div class='line-group'/>
+                        <div class='line-quantity'/>
+                        <div class='line-info'>
+                                <div class='line-description'/>
+                                <div class='line-calificators'/>
+                                <div class='line-ingredients'/>
+                                <div class='line-menu-lines'/>
+                        </div>
+                        <div class='line-selected-quantity-wrapper'>
+                                <div class='line-selected-quantity'/>
+                        </div>
+                </div>
+        </script>
+        <script id="client-panel-template" type="text/x-handlebars-template">
+                <div id='client-panel'>
+                        <div class="client-panel-wrapper">
+                                <div class='client-panel-header'/>
+                                <div class='client-panel-content'/>
+                        </div>
+                </div>
+        </script>
+        <script id="client-view-template" type="text/x-handlebars-template">
+                <div class='client-view'>
+                        <div class='client-dni'/>
+                        <div class='client-name'/>
+                </div>
+        </script>
+        <script id="sale-closing-line-view-template" type="text/x-handlebars-template">
+                <div class='line-view'>
+                        <div class='line-quantity'></div>
+                        <div class='line-description'></div>
+                        <div class='line-price'></div>
+                </div>
+        </script>
+        <script id="sale-closing-dinner-view-template" type="text/x-handlebars-template">
+                <div class='dinner-view'>
+                        <div class='dinner-client-name'></div>
+                        <div class='dinner-payment-way'></div>
+                        <div class='dinner-total'></div>
+                        <div class='dinner-modifier'></div>
+                </div>
+        </script>
+        <!--Modal-->
+        <script id="input-modal-template" type="text/x-handlebars-template">
+                <div class='modal'>
+                        <div class='modal-header'/>
+                        <div class='modal-content'>
+                                <span class='modal-input-description'/>
+                                <input type='text' class='modal-input' label="modal-input"/>
+                        </div>
+                        <div class='modal-buttons two-buttons'>
+                                <div class='modal-button modal-accept'>Aceptar</div>
+                                <div class='modal-button modal-close'>Cerrar</div>
+                        </div>
+                </div>
+        </script>
+        <script id="alert-modal-template" type="text/x-handlebars-template">
+                <div class='modal alert-modal'>
+                        <div class='modal-header'/>
+                        <div class='modal-content'>
+                                <span class='alert-modal-text'/>
+                        </div>
+                        <div class='modal-buttons one-button'>
+                                <div class='modal-button modal-alert-button'/>
+                        </div>
+                </div>
+        </script>
+        <script id="confirm-modal-template" type="text/x-handlebars-template">
+                <div class='modal  confirm-modal'>
+                        <div class='modal-header'/>
+                        <div class='modal-content'>
+                                <span class='confirm-modal-text'/>
+                        </div>
+                        <div class='modal-buttons two-buttons'>
+                                <div class='modal-button modal-accept'>Aceptar</div>
+                                <div class='modal-button modal-close'>Cancelar</div>
+                        </div>
+                </div>
+        </script>
+        <script id="ticket-line-modal-template" type="text/x-handlebars-template">
+                <div class='modal ticket-line-modal'>
+                        <div class='modal-header'>
+                                Modificando líneas
+                        </div>
+                        <div class='modal-content'>
+                                <div class='ticket-line-modal-line'/>
+                                <div class='ticket-line-modal-buttons'>
+                                        <div class='modal-button ticket-line-delete-button'>Borrar</div>
+                                        <div class='modal-button ticket-line-price-button'>Precio</div>
+                                        <div class='modal-button ticket-line-unit-button'>Unitario</div>
+                                        <div class='modal-button ticket-line-quantity-button'>Cantidad</div>
+                                        <div class='modal-button ticket-line-calificator-button'>Descriptores</div>
+                                        <div class='modal-button ticket-line-group-button'>Orden de platos</div>
+                                        <div class='modal-button ticket-line-treat-button'>Invitar</div>
+                                        <div class='modal-button ticket-line-menu-button'>Editar menú</div>
+                                        <div class='modal-button ticket-line-fast-food-button'>Editar FF</div>
+                                        <div class='modal-button ticket-line-demand-button'>Reclamar</div>
+                                        <div class='modal-button ticket-line-ask-next-button'>Siguientes platos</div>
+                                        <div class='modal-button ticket-line-discount-button'>Descuento</div>
+                                        <!--<div class='modal-button ticket-line-move-button'>Traspasar</div>-->
+                                        <div class='modal-button ticket-line-delete-all-button'>Borrar todo</div>
+                                </div>
+                        </div>
+                        <div class='modal-buttons one-button'>
+                                <div class='modal-button modal-close'>Cancelar</div>
+                        </div>
+                </div>
+        </script>
+        <script id="group-modal-template" type="text/x-handlebars-template">
+                <div class='modal group-modal'>
+                        <div class='modal-header'>
+                                Eligiendo grupo
+                        </div>
+                        <div class='modal-content group-modal-content'/>
+                        <div class='modal-buttons one-button'>
+                                <div class='modal-button modal-close'>Cancelar</div>
+                        </div>
+                </div>
+        </script>
+        <script id="select-modal-template" type="text/x-handlebars-template">
+                <div class='modal select-modal'>
+                        <div class='modal-header'>
+                        </div>
+                        <div class='modal-content select-modal-content'/>
+                        <div class='modal-buttons one-button'>
+                                <div class='modal-button modal-close'>Cancelar</div>
+                        </div>
+                </div>
+        </script>
+        <script id="number-input-modal-template" type="text/x-handlebars-template">
+                <div class='modal number-input-modal'>
+                        <div class='modal-header'/>
+                        <div class='modal-content'>
+                                <input type='text' class='modal-input' label="modal-number-input" readonly/>
+                                <div class='number-input-modal-buttons'>
+                                        <div class='number-input-button' data-value='7'>7</div>
+                                        <div class='number-input-button' data-value='8'>8</div>
+                                        <div class='number-input-button' data-value='9'>9</div>
+                                        <div class='number-input-button' data-value='C'>C</div>
+                                        <div class='number-input-button' data-value='4'>4</div>
+                                        <div class='number-input-button' data-value='5'>5</div>
+                                        <div class='number-input-button' data-value='6'>6</div>
+                                        <div class='number-input-button' data-value='0'>0</div>
+                                        <div class='number-input-button' data-value='1'>1</div>
+                                        <div class='number-input-button' data-value='2'>2</div>
+                                        <div class='number-input-button' data-value='3'>3</div>
+                                        <div class='number-input-button' data-value=','>,</div>
+                                </div>
+                        </div>
+                        <div class='modal-buttons two-buttons'>
+                                <div class='modal-button modal-accept'>Aceptar</div>
+                                <div class='modal-button modal-close'>Cancelar</div>
+                        </div>
+                </div>
+        </script>
+        <script id="button-modal-template" type="text/x-handlebars-template">
+                <div class='modal button-modal'>
+                        <div class='modal-header'>
+                                Eligiendo opción
+                        </div>
+                        <div class='modal-content'/>
+                        <div class='modal-buttons one-button'>
+                                <div class='modal-button modal-close'>Cancelar</div>
+                        </div>
+                </div>
+        </script>
+        <script id="group-modal-view-template" type="text/x-handlebars-template">
+                <div class='group-modal-view'>
+                        <div class="group-color-band"/>
+                        <div class="group-description"/>
+                </div>
+        </script>
+        <script id="qr-scanner-modal-template" type="text/x-handlebars-template">
+                <div class='modal qr-scanner-modal'>
+                        <div class='modal-header'/>
+                        <div class='modal-content'>
+                                <video class='qr-scanner-video'></video>
+                        </div>
+                        <div class='modal-buttons one-button'>
+                                <div class='modal-button modal-close'/>
+                        </div>
+                </div>
+        </script>
+        <script src="build/bundle.js?v=24.12.19"></script>
+</body>
+
+</html>

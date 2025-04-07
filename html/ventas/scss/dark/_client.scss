@@ -1,0 +1,35 @@
+#client-panel{
+    text-align:center;
+   .client-panel-wrapper{
+       max-width:500px;
+       width:100%;
+       display:inline-block;
+       box-shadow: 0px 0px 15px 1px black;
+    }
+    .client-view{
+        display:grid;
+        grid-gap:5px;
+        font-size:18px;
+        grid-template-columns: 100px 1fr;
+        grid-template-rows: auto;
+        color:black;
+        text-transform: uppercase;
+        padding:10px;
+        &:nth-child(odd){
+            background-color:rgb(254, 255, 199);
+        }
+        &:nth-child(even){
+            background-color: rgb(250, 252, 165);
+        }
+    }
+    .client-name{
+        text-align:left;
+        padding-left:5px;
+        overflow:hidden;
+    }
+    .client-dni{
+        text-align:right;
+        overflow:hidden;
+    }
+    
+}   

@@ -1,0 +1,28 @@
+#operator-panel{
+    @include square-grid;
+}
+
+.operator-view{
+    @include clickable1;
+    padding: 5px;
+    position:relative;
+    border:1px solid black;
+    box-shadow:0px 0px 5px 1px black;
+    .operator-image{
+        width:100%;
+        display:block;
+    }
+    .operator-name{
+        text-align:center;
+        font-weight:bold;
+        display:block;
+        position:absolute;
+        bottom:0;
+        left:0;
+        right:0;
+        background-color:rgb(40,40,40);
+        white-space: nowrap;
+        overflow:hidden;
+        padding:inherit;
+    }
+}

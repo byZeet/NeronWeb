@@ -1,0 +1,130 @@
+@mixin square-grid{
+    display:grid;
+    grid-template-columns: repeat(2, 1fr);
+    grid-auto-rows: 1fr;
+    min-width:0;
+    grid-gap: 5px;
+    @media (min-width: $breakpoint1) {
+        &.bk1-3{
+            grid-template-columns: repeat(3, 1fr);
+        }
+        &.bk1-4{
+            grid-template-columns: repeat(4, 1fr);
+        }
+        &.bk1-5{
+            grid-template-columns: repeat(5, 1fr);
+        }
+    }
+    @media (min-width: $breakpoint2) {
+        padding:5px;
+        &.bk2-4{
+            grid-template-columns: repeat(4, 1fr);
+        }
+        &.bk2-5{
+            grid-template-columns: repeat(5, 1fr);
+        }
+        &.bk2-6{
+            grid-template-columns: repeat(6, 1fr);
+        }
+        &.bk2-7{
+            grid-template-columns: repeat(7, 1fr);
+        }
+        &.bk2-8{
+            grid-template-columns: repeat(8, 1fr);
+        }
+    }
+    @media (min-width: $breakpoint3) {
+        &.bk3-5{
+            grid-template-columns: repeat(5, 1fr);
+        }
+        &.bk3-6{
+            grid-template-columns: repeat(6, 1fr);
+        }
+        &.bk3-7{
+            grid-template-columns: repeat(7, 1fr);
+        }
+        &.bk3-8{
+            grid-template-columns: repeat(8, 1fr);
+        }
+    }
+    @media (min-width: $breakpoint4) {
+        &.bk4-6{
+            grid-template-columns: repeat(6, 1fr);
+        }
+        &.bk4-7{
+            grid-template-columns: repeat(7, 1fr);
+        }
+        &.bk4-8{
+            grid-template-columns: repeat(8, 1fr);
+        }
+        &.bk4-9{
+            grid-template-columns: repeat(9, 1fr);
+        }
+        &.bk4-10{
+            grid-template-columns: repeat(10, 1fr);
+        }
+    }
+    @media (min-width: $breakpoint5) {
+        &.bk5-8{
+            grid-template-columns: repeat(8, 1fr);
+        }
+        &.bk5-9{
+            grid-template-columns: repeat(9, 1fr);
+        }
+        &.bk5-10{
+            grid-template-columns: repeat(10, 1fr);
+        }
+        &.bk5-11{
+            grid-template-columns: repeat(11, 1fr);
+        }
+        &.bk5-12{
+            grid-template-columns: repeat(12, 1fr);
+        }
+    }
+
+    > *:first-child {
+        grid-row: 1 / 1;
+        grid-column: 1 / 1;
+    }
+    &::before{
+        content: '';
+        width: 0;
+        padding-bottom: 100%;
+        grid-row: 1 / 1;
+        grid-column: 1 / 1;
+    }
+
+    .square{
+        position:relative;
+        word-break: break-word;
+    }
+
+    .square-wrapper{
+        position:absolute;
+        top:0;
+        bottom:0;
+        left:0;
+        right:0;
+    }
+}
+
+@mixin clickable1{
+    &:active{
+        transform: scale(0.95);
+        box-shadow: inset 0px 0px 5px 2px rgba(0, 0, 0, 0.5);
+    }
+}
+
+@mixin selectable1{
+    &.selected{
+        transform: scale(0.95);
+        box-shadow: inset 0px 0px 5px 2px rgba(0, 0, 0, 0.5);
+    }
+}
+
+@mixin prefix($property, $value, $prefixes: ()) {
+    @each $prefix in $prefixes {
+      #{'-' + $prefix + '-' + $property}: $value;
+    }
+    #{$property}: $value;
+}

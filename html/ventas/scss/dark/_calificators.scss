@@ -1,0 +1,65 @@
+#calificator-panel{
+    
+    .calificators-header{
+        display:flex;
+        font-size:18px;
+        text-align:center;
+        font-weight:bold;
+        margin-bottom: 15px;
+        text-transform: uppercase;
+        padding:5px;
+        border: 1px solid black;
+        justify-content:space-between;
+        align-content:center;
+        background-color: $navbar-color;
+        margin-top:10px;
+        >div{
+            display:flex;
+            align-items:center;
+        }
+        .required-img{
+            display:none;
+            height:20px;
+            width:20px;
+            //margin-left:10px;
+        }
+        .prev-button, .next-button{
+            font-size:0;
+            img{
+                height:30px;
+                width:30px;
+                margin:0;
+            }
+        }
+    }
+
+    .calificators-content{
+        @include square-grid;
+        .calificator-view{
+            font-weight:bold;
+            display:flex;
+            text-align:center;
+            justify-content:center;
+            align-items:center;
+            box-shadow: 1px 1px 5px 0px black;
+            background-color:white;
+            color:black;
+            text-transform: uppercase;
+            text-overflow:ellipsis;
+            overflow:hidden;
+            word-break: break-word;
+            &.selected{
+                transform:scale(0.95);
+                //box-shadow: inset 0px 0px 5px 2px rgba(0,0,0,0.5);
+                box-shadow: inset 0px 0px 5px 3px rgba(255, 136, 0, 0.75);
+            }
+            
+        }
+    }
+
+    &.required{
+        .required-img{
+            display:inline-block;
+        }
+    }
+}

@@ -1,0 +1,10 @@
+{
+    "short_name": "Nerón Web",
+    "name": "Nerón Web",
+    "background_color": "#282828",
+    "theme_color": "#282828",
+    "start_url": "index.html",
+    "icons": {
+      "128": "favicon/icon-128.ico"
+    }
+  }

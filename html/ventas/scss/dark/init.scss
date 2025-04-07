@@ -1,0 +1,45 @@
+@import "globals";
+@import "mixins";
+@import "root";
+@import "header";
+@import "buttons";
+@import "modal";
+@import "loading";
+@import "operator";
+@import "place";
+@import "family";
+@import "ticket";
+@import "fastfood";
+@import "calificators";
+@import "menu";
+@import "client";
+@import "demand";
+@import "saleclosing";
+
+*{
+    box-sizing: border-box;
+    margin:0;
+    padding:0;
+}
+
+html{
+    width:100%;
+    height:100%;
+    font-family: "Helvetica", "Segoe UI", arial;
+    @include prefix(user-select, none, moz webkit ms);
+}
+
+body{
+    width:100%;
+    height:100%;
+    max-height:100%;
+    overflow:hidden;
+}
+
+.hidden{
+    display:none !important;
+}
+
+.invisible{
+    visibility: hidden !important;
+}

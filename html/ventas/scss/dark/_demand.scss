@@ -1,0 +1,92 @@
+#demand-panel{
+    text-align:center;
+    .demand-lines{
+        max-width:500px;
+        width:100%;
+        display:inline-block;
+        box-shadow: 0px 0px 15px 1px black;
+    }
+    .demand-line-view{
+        text-transform: uppercase;
+        display:grid;
+        grid-gap:5px;
+        font-size:18px;
+        grid-template-columns: 10px 10fr 80fr 10fr;
+        grid-template-rows: auto;
+        color:black;
+        
+        //padding:10px 5px;
+        .line-selected-quantity-wrapper{
+            text-align:center;
+            font-size:0;
+            margin: 10px 0;
+            margin-right:5px;
+            //padding-right:10px;
+        }
+        .line-selected-quantity{
+            display:inline-block;
+            height:25px;
+            //width:25px;
+            min-width:25px;
+            line-height:25px;
+            text-align:center;
+            font-weight:bold;
+            background-color:darkorange;
+            color:white;
+            font-size:18px;
+            border-radius:25px;
+            padding: 0 2px;
+        }
+        .line-info{
+            font-size:0;
+            line-height:25px;
+            text-align:left;
+            margin: 10px 0;
+        }
+
+        .line-description{
+            font-size:18px;
+            line-height:25px;
+        }
+        .line-quantity{
+            line-height:25px;
+            font-weight:bold;
+            margin: 10px 0;
+        }
+        .line-calificators{
+            padding: 5px 0;
+            padding-bottom:0;
+            text-align:left;
+            font-size:16px;
+            color:rgb(20, 20, 20);
+            font-style: italic;
+        }
+        .line-ingredients{
+            text-align:left;
+            font-size:16px;
+            color:rgb(20, 20, 20); 
+            .line-ingredient{
+                .type{
+                    display:inline-block;
+                    width:20px;
+                    text-align:center;
+                }
+            }
+            
+        }
+
+        .line-menu-lines{
+            text-align:left;
+            font-size:16px;
+            color:rgb(20, 20, 20);
+            
+        }
+
+        &:nth-child(odd){
+            background-color:rgb(254, 255, 199);
+        }
+        &:nth-child(even){
+            background-color: rgb(250, 252, 165);
+        }
+    }
+}
