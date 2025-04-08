@@ -70,12 +70,18 @@
                                         </div>
                                         <div class='right'>
                                                 <span class='product-price'/>
-                                                <span class='euro-symbol'>€</span>
+                                                <span class='product-symbol'>€</span>
                                         </div>
                                 </div>
                         </div>
+                        <!-- SEARCH PRODUCTOS -->
+                        <div class="search-products-wrapper">
+                                <input type="text" id="search" placeholder="Buscar productos..." autocomplete="on">
+                            </div>
+                        <!-- CONTAINER DE LAS FAMILIAS PRINCIPAL -->
                         <div class="wrapper family-wrapper">
                                 <div class='family-panel'></div>
+                                <!-- <div id="products-container"></div> -->
                         </div>
                         </div>
                 </div>
@@ -268,6 +274,7 @@
                         </div>
                 </div>
         </script>
+        <!-- CONTROLA LOS NOMBRES DE LAS FAMILIAS -->
         <script id="family-view-template" type="text/x-handlebars-template">
                 <div class='family-view square'>
                         <div class='square-wrapper'>
