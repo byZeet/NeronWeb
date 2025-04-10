@@ -1,5 +1,5 @@
 import ProductModel from "./ProductModel.js";
-import ColorUtil from "lib/util/ColorUtil.js";
+import ColorUtil from "../../../lib/util/ColorUtil.js";
 
 class FamilyModel{
     constructor(family){

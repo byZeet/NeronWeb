@@ -149,7 +149,7 @@ class OpenTableController {
     switchState(){
         this.navigator.navigateTo({
             type: Navigator.StatePlace,
-            title: "Elección de mesasss",
+            title: "Elección de mesas",
             tableCallback: (table)=>{
                 return this.tableCallback(table);
             },

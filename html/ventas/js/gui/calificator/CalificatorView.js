@@ -1,4 +1,4 @@
-import HTMLUtil from "lib/util/HTMLUtil.js"; 
+import HTMLUtil from "../../../../lib/util/HTMLUtil.js"; 
 
 const calificatorView = HTMLUtil.createElementFromTemplateId("calificator-view-template");
 

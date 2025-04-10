@@ -1,4 +1,4 @@
-import ClientProtocol from "protocol/WebSocketClientProtocol.js";
+import ClientProtocol from "../../../protocol/WebSocketClientProtocol.js";
 
 class WebSocketController{
 
@@ -78,7 +78,15 @@ class WebSocketController{
                 break;
             case ClientProtocol.HOTEL_ROOM:
                 this.app.onHotelRoom(args);
+                break;            
+            case ClientProtocol.PRODUCT_STOCK:
+                if (this.app.orderController.output.onProductSearchResult) {
+                    this.app.orderController.output.onProductSearchResult(args);
+                }
                 break;
+                
+
+
         }
     }
 }

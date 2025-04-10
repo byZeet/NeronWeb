@@ -557,7 +557,7 @@
 .operator-view {
   padding: 5px;
   position: relative;
-  border: 1px solid black;
+  border: 1px solid rgb(255, 255, 255);
   box-shadow: 0px 0px 5px 1px black; 
 }
   .operator-view:active {

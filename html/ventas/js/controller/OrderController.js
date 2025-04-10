@@ -18,10 +18,6 @@ class OrderController {
         this.selectModal = modal;
     }
 
-    setOutput(output) {
-        this.output = output;
-    }
-
     setNavigator(navigator) {
         this.navigator = navigator;
     }
@@ -110,11 +106,62 @@ class OrderController {
 
     setView(view) {
         this.view = view;
+    
+        setTimeout(() => {
+            const searchInput = document.getElementById("search");
+            if (searchInput) {
+                console.log("🧪 Input encontrado, conectando eventos...");
+    
+                // Enter
+                searchInput.addEventListener("keydown", (e) => {
+                    if (e.key === "Enter") {
+                        const searchText = searchInput.value.trim();
+                        if (searchText.length > 1) {
+                            console.log("🔎 [ENTER] Buscando producto:", searchText);
+                            window.app.isProductSearchActive = true;
+                            this.searchText = searchText;
+                            this.buscarProductos(searchText);
+                            searchInput.value = "";
+                        }
+                    }
+                });
+    
+                // En tiempo real
+                searchInput.addEventListener("input", () => {
+                    const searchText = searchInput.value.trim();
+                    if (searchText.length > 1) {
+                        console.log("🔍 [INPUT] Buscando producto:", searchText);
+                        window.app.isProductSearchActive = true;
+                        this.searchText = searchText;
+                        this.buscarProductos(searchText);
+                    }
+                });
+            } else {
+                console.warn("⚠️ No se encontró el input de búsqueda.");
+            }
+        }, 300); // Delay para asegurar que el DOM ya esté
     }
+    
 
     setMultiTariff(multiTariff){
         this.multiTariff = multiTariff;
     }
+
+    setOutput(output) {
+        this.output = output;
+    
+        this.output.onProductSearchResult = (products) => {
+            console.log("✅ Recibí productos:", products); // <--- aquí ves si te llega del servidor
+            this.navigator.navigateTo({
+                type: Navigator.StateProduct,
+                controller: this,
+                products: products
+            });
+        };
+    }
+    
+    
+    
 
     changeTable(table) {
         this.table = table;
@@ -668,13 +715,22 @@ class OrderController {
         this.output.getTable(this.table.id);
     }
 
-    goBack(){
-        if(this.substate == Navigator.StateFamily
-            && this.rootState){
+    goBack() {
+        if (this._lastWasSearch) {
+            this._lastWasSearch = false;
+            this.view.clearSearchInput();  // 🧹 limpiar input
+            this.showFamilies();           // volver a las familias
+            return;
+        }
+    
+        if (this.substate == Navigator.StateFamily && this.rootState) {
             this.exitState();
         }
+
         this.navigator.goBack();
     }
+    
+    
 
     worldTouch(){
         this.exitState();
@@ -692,6 +748,17 @@ class OrderController {
             this.output.closeTable(this.table);
         }
     }
+
+    buscarProductos(searchText) {
+        console.log("Buscando productos por:", searchText);
+        this.searchText = searchText;
+        window.app.isProductSearchActive = true; // <- activamos la flag
+        this.output.searchProducts(searchText);
+        this._lastWasSearch = true; // marca que venimos de búsqueda
+    }
+    
+    
+    
 }
 
 export default OrderController;

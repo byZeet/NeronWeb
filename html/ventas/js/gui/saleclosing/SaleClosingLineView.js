@@ -1,4 +1,4 @@
-import MathUtil from "lib/util/MathUtil.js";
+import MathUtil from "../../../../lib/util/MathUtil.js";
 
 const saleClosingLineViewTemplate = document.getElementById("sale-closing-line-view-template").innerHTML;
 

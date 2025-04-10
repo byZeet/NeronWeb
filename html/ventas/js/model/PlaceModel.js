@@ -1,5 +1,5 @@
-import ColorUtil from "lib/util/ColorUtil.js";
-import Observable from "lib/util/Observable.js";
+import ColorUtil from "../../../lib/util/ColorUtil.js";
+import Observable from "../../../lib/util/Observable.js";
 
 class PlaceModel{
     constructor(){

@@ -22,7 +22,8 @@ const constants = {
     TABLE_OPEN: 21,
     PRODUCT_STOCK: 22,
     PLACE_NOTIFICATIONS: 23,
-    HOTEL_ROOM: 24
+    HOTEL_ROOM: 24,
+    SEND_PRODUCTS: 25, // 👈 nuevo cliente protocol 
 }
 
 export default constants;

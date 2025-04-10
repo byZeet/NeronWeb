@@ -130,6 +130,15 @@ class ButtonNav{
             }
         }
 
+        let searchProductButton = {
+            className: "product-search-button",
+            icon: "./img/dark/search.png",
+            callback: () => {
+                this.controller.buscarProductos(); // Llama al modal
+            }
+        };
+        
+
         // let deleteTicketButton = {
         //     className: "delete-ticket-button",
         //     icon: "./img/dark/delete-ticket.png",
@@ -393,6 +402,7 @@ class ButtonNav{
             calculatorButton,
             fastProductsButton,
             kitchenMessageButton,
+            searchProductButton, // 👈 Asegurate de incluirlo
             tariffButton,
             editDinnersButton
         ];

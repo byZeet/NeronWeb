@@ -1,5 +1,5 @@
 import GroupModel from "../GroupModel.js";
-import ColorUtil from "lib/util/ColorUtil.js";
+import ColorUtil from "../../../../lib/util/ColorUtil.js";
 import ClientModel from "../ClientModel.js";
 import PlaceModel from "../PlaceModel.js";
 import PaymentWayModel from "../PaymentWayModel.js";
@@ -101,9 +101,15 @@ class MasterDecoder{
         }
         for(let o of args){
             let product = this.productMap.get(o.Id);
+            if (!product) {
+                console.warn("⚠️ Producto con ID no encontrado en el productMap:", o?.Id);
+                continue;
+            }
             product.setCurrentStock(o.Stock);
         }
     }
+    
+    
 
     deserializeHotelRoom(args){
         let room = new HotelRoom();

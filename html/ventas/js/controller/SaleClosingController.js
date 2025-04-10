@@ -6,7 +6,7 @@ import SaleClosingDinnerController from "./saleclosing/SaleClosingDinnerControll
 
 import DemandLinesCreator from "./demand/DemandLinesCreator.js";
 
-import MathUtil from "lib/util/MathUtil.js";
+import MathUtil from "../../../lib/util/MathUtil.js";
 import GlobalParameters from "../app/GlobalParameters.js";
 
 import CardReader from "./cardreader/CardReader.js";

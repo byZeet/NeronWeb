@@ -1,4 +1,4 @@
-import ServerProtocol from "protocol/WebSocketServerProtocol.js";
+import ServerProtocol from "../../../protocol/WebSocketServerProtocol.js";
 import LineEncoder from "../model/encoder/LineEncoder.js";
 
 
@@ -300,6 +300,12 @@ class WebSocketOutput {
         var date = new Date();
         return date.getHours()+":"+date.getMinutes()+":"+date.getSeconds()+"."+date.getMilliseconds();
     }
+
+    searchProducts(searchText) {
+        this._sendCommand(44, { Search: searchText });
+    }
+    
+    
 }
 
 export default WebSocketOutput;

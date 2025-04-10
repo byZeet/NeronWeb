@@ -20,6 +20,8 @@ class OrderPanel{
         this.productDom = this.dom.find(".family-panel");
 
         this.ticketInfo = new TicketInfoView(this.dom.find(".ticket-info"));
+        this.searchInput = null; // 🔹 Referencia al input de búsqueda
+
     } 
 
     setController(controller){
@@ -67,16 +69,22 @@ class OrderPanel{
 
 
     updateProducts(products){
-        this.familyDom.children().detach();
         this.productDom.children().detach();
+    
         for(let product of products){
             if(product.sellable){
                 let view = this.productViews.get(product.id);
                 this.productDom.append(view.dom);
             }
         }
+    
         this.ticketInfo.dom.get(0).scrollIntoView();
+    
+        if (this.searchInput) {
+            this.searchInput.focus(); // 🔹 Mantener foco después de actualizar productos
+        }
     }
+    
 
     updateCombinedProducts(products){
         this.familyDom.children().detach();
@@ -159,6 +167,52 @@ class OrderPanel{
             }
         );
     }
+    
+    // 🔍 Agrega este método justo aquí:
+    initSearchInput(controller) {
+        this.searchInput = this.dom.find("#search"); // 🔹 Guardamos referencia
+    
+        if (this.searchInput.length === 0) {
+            console.warn("❌ No se encontró el input de búsqueda.");
+            return;
+        }
+    
+        this.searchInput.on("input", () => {
+            const value = this.searchInput.val().trim();
+        
+            if (value.length > 1) {
+                window.app.isProductSearchActive = true;
+                controller.searchText = value;
+                controller.buscarProductos(value);
+            } else {
+                // 🔙 Si se borra el input, mostrar familias principales
+                controller.showFamilies(); 
+            }
+        });
+        
+    
+        this.searchInput.on("keydown", (e) => {
+            if (e.key === "Enter") {
+                const value = this.searchInput.val().trim();
+                if (value.length > 1) {
+                    window.app.isProductSearchActive = true;
+                    controller.searchText = value;
+                    controller.buscarProductos(value);
+                    this.searchInput.val("");
+                }
+            }
+        });
+    }
+    
+    clearSearchInput() {
+        const input = this.dom.find("#search");
+        if (input.length > 0) {
+            input.val("");
+            input.focus(); // opcional: dejar el foco si quieres
+        }
+    }
+        
+
 }
 
 export default OrderPanel;

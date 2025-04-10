@@ -1,7 +1,7 @@
 import TicketLineModel from "./ticket/TicketLineModel.js";
 import Constants from "../app/Constants.js";
 
-import Observable from "lib/util/Observable.js";
+import Observable from "../../../lib/util/Observable.js";
 
 class TableModel{
     constructor(){

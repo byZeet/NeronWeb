@@ -1,4 +1,4 @@
-import Constants from "../../app/Constants";
+import Constants from "../../app/Constants.js";
 
 const fastFoodProductViewTemplate = document.getElementById("menu-view-template").innerHTML;
 

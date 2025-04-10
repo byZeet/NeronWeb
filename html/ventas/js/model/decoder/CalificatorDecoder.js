@@ -1,6 +1,6 @@
 import CalificatorModel from "../CalificatorModel.js";
 import CalificatorGroupModel from "../CalificatorGroupModel.js";
-import Observable from "lib/util/Observable.js";
+import Observable from "../../../../lib/util/Observable.js";
 
 class CalificatorDecoder{
 

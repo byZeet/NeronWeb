@@ -105,6 +105,7 @@ class App {
 
         this.modalController = new ModalController();
         this.orderController = new OrderController();
+        window.app = this; // hace accesible la instancia desde la consola
         this.fastFoodController = new FastFoodController();
         this.calificatorController = new CalificatorController();
         this.ticketController = new TicketController();
@@ -210,6 +211,7 @@ class App {
 
         this.orderController.setNavigator(this.navigator);
         this.orderController.setView(this.orderPanel);
+        this.orderPanel.initSearchInput(this.orderController);
         this.orderController.setModalController(this.modalController);
         this.orderController.setCommander(this.commanderId);
         this.orderController.setSelectModal(this.selectModal);
@@ -288,7 +290,9 @@ class App {
         this.isInitialized = false;
 
         this.initGridColumns();
-        this.startWebSocket();
+
+        this.startWebSocket()
+        
     }
 
     startWebSocket(){
@@ -584,9 +588,42 @@ class App {
         );
     }
 
-    onProductStock(args){
-        this.masterDecoder.deserializeProductStocks(args);
+    onProductStock(args) {
+        // ⚠️ No actualizar stock acá, esto viene de una búsqueda por nombre
+        // Solo mostrar alerta si es una búsqueda
+        if (this.isProductSearchActive) {
+            this.isProductSearchActive = false;
+    
+            if (!args || args.length === 0) {
+                this.modalController.alert(
+                    "Sin resultados", 
+                    `No se encontraron productos para: "${this.orderController.searchText ?? "?"}"`, 
+                    "Aceptar"
+                );
+                return;
+            }
+    
+            const productos = [];
+    
+            for (const p of args) {
+                const product = this.masterDecoder.productMap.get(p.Id);
+                if (!product) {
+                    console.warn("❌ Producto no encontrado en el productMap:", p.Id);
+                    continue;
+                }
+                productos.push(product);
+            }
+    
+            this.navigator.navigateTo({
+                type: Navigator.StateProduct,
+                controller: this.orderController,
+                products: productos
+            });
+        }
     }
+    
+    
+    
 
     onPlaceNotifications(args){
         this.placeController.updatePlaceNotifications(args);
@@ -622,7 +659,10 @@ class App {
             ()=>{window.location.reload();}
         );
     }
+    
 
 }
 
-export default App;
+const app = new App();
+window.app = app;
+app.launch();

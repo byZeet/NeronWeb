@@ -1,5 +1,5 @@
 import GlobalParameters from "../../app/GlobalParameters.js";
-import HTMLUtil from "lib/util/HTMLUtil.js";
+import HTMLUtil from "../../../../lib/util/HTMLUtil.js";
 
 const productView = HTMLUtil.createElementFromTemplateId("product-view-template");
 

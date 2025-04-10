@@ -41,7 +41,8 @@ const constants = {
     MARK_NOTIFICATION:40,
     ASK_HOTEL_ROOM:41,
     TRANSFER_HOTEL_ROOM:42,
-    SEAT_RESERVE:43
+    SEAT_RESERVE:43,
+    SEARCH_PRODUCTS: 44 // Search products
 }
 
 export default constants;

@@ -1,5 +1,5 @@
-import ColorUtil from "lib/util/ColorUtil.js";
-import DateUtil from "lib/util/DateUtil.js";
+import ColorUtil from "../../../lib/util/ColorUtil.js";
+import DateUtil from "../../../lib/util/DateUtil.js";
 import GlobalParameters from "../app/GlobalParameters.js";
 import Constants from "../app/Constants.js";
 import Observable from "../../../lib/util/Observable.js";

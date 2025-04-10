@@ -1,4 +1,4 @@
-import Observable from "lib/util/Observable.js";
+import Observable from "../../../../lib/util/Observable.js";
 
 class SaleClosingDinner{
 

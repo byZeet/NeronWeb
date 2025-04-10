@@ -22,11 +22,14 @@ class PlaceController {
     }
 
     updatePlaceNotifications(placeIds){
+        if (!this.placeMap) return; // 👈 Protección contra null/undefined
+    
         for(let place of this.placeMap.values()){
             let hasNotification = placeIds.includes(place.id);
             place.setHasNotifications(hasNotification);
         }
     }
+    
 
     setView(view) {
         this.view = view;
