@@ -107,39 +107,39 @@ class OrderController {
     setView(view) {
         this.view = view;
     
-        setTimeout(() => {
-            const searchInput = document.getElementById("search");
-            if (searchInput) {
-                console.log("🧪 Input encontrado, conectando eventos...");
+        // setTimeout(() => {
+        //     const searchInput = document.getElementById("search");
+        //     if (searchInput) {
+        //         console.log("🧪 Input encontrado, conectando eventos...");
     
-                // Enter
-                searchInput.addEventListener("keydown", (e) => {
-                    if (e.key === "Enter") {
-                        const searchText = searchInput.value.trim();
-                        if (searchText.length > 1) {
-                            console.log("🔎 [ENTER] Buscando producto:", searchText);
-                            window.app.isProductSearchActive = true;
-                            this.searchText = searchText;
-                            this.buscarProductos(searchText);
-                            searchInput.value = "";
-                        }
-                    }
-                });
+        //         // Enter
+        //         searchInput.addEventListener("keydown", (e) => {
+        //             if (e.key === "Enter") {
+        //                 const searchText = searchInput.value.trim();
+        //                 if (searchText.length > 1) {
+        //                     console.log("🔎 [ENTER] Buscando producto:", searchText);
+        //                     window.app.isProductSearchActive = true;
+        //                     this.searchText = searchText;
+        //                     this.buscarProductos(searchText);
+        //                     searchInput.value = "";
+        //                 }
+        //             }
+        //         });
     
-                // En tiempo real
-                searchInput.addEventListener("input", () => {
-                    const searchText = searchInput.value.trim();
-                    if (searchText.length > 1) {
-                        console.log("🔍 [INPUT] Buscando producto:", searchText);
-                        window.app.isProductSearchActive = true;
-                        this.searchText = searchText;
-                        this.buscarProductos(searchText);
-                    }
-                });
-            } else {
-                console.warn("⚠️ No se encontró el input de búsqueda.");
-            }
-        }, 300); // Delay para asegurar que el DOM ya esté
+        //         // En tiempo real
+        //         searchInput.addEventListener("input", () => {
+        //             const searchText = searchInput.value.trim();
+        //             if (searchText.length > 1) {
+        //                 console.log("🔍 [INPUT] Buscando producto:", searchText);
+        //                 window.app.isProductSearchActive = true;
+        //                 this.searchText = searchText;
+        //                 this.buscarProductos(searchText);
+        //             }
+        //         });
+        //     } else {
+        //         console.warn("⚠️ No se encontró el input de búsqueda.");
+        //     }
+        // }, 300); // Delay para asegurar que el DOM ya esté
     }
     
 
