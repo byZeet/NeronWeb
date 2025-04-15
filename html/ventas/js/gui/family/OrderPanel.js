@@ -22,6 +22,10 @@ class OrderPanel{
         this.ticketInfo = new TicketInfoView(this.dom.find(".ticket-info"));
         this.searchInput = null; // 🔹 Referencia al input de búsqueda
 
+        this.noResults = $("<div>").addClass("no-results-message hidden"); // lo ocultamos por defecto
+        this.productDom.after(this.noResults); // lo agregamos justo después del panel de productos
+
+
     } 
 
     setController(controller){
@@ -68,22 +72,29 @@ class OrderPanel{
     }
 
 
-    updateProducts(products){
+    updateProducts(products) {
         this.productDom.children().detach();
     
-        for(let product of products){
-            if(product.sellable){
-                let view = this.productViews.get(product.id);
-                this.productDom.append(view.dom);
+        if (products.length === 0) {
+            const texto = this.controller?.searchText ?? "";
+            this.noResults
+                .removeClass("hidden")
+                .text(`Sin resultados para "${texto}"`);
+        } else {
+            this.noResults.addClass("hidden");
+    
+            for (let product of products) {
+                if (product.sellable) {
+                    let view = this.productViews.get(product.id);
+                    this.productDom.append(view.dom);
+                }
             }
         }
     
         this.ticketInfo.dom.get(0).scrollIntoView();
-    
-        if (this.searchInput) {
-            this.searchInput.focus(); // 🔹 Mantener foco después de actualizar productos
-        }
     }
+    
+    
     
 
     updateCombinedProducts(products){
@@ -199,9 +210,13 @@ class OrderPanel{
                     controller.searchText = value;
                     controller.buscarProductos(value);
                     this.searchInput.val("");
+        
+                    // 🔻 Quitar foco tras pulsar Enter
+                    this.searchInput.blur();
                 }
             }
         });
+        
     }
     
     clearSearchInput() {

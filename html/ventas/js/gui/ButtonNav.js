@@ -92,7 +92,7 @@ class ButtonNav{
 
         let worldButton = {
             className: "world-button",
-            icon: "./img/dark/world.png",
+            icon: "./img/dark/mesa.svg",
             callback: ()=> {
                this.controller.worldTouch();
             }
@@ -137,6 +137,21 @@ class ButtonNav{
                 this.controller.buscarProductos(); // Llama al modal
             }
         };
+
+        let toggleSearchInputButton = {
+            className: "toggle-search-input-button",
+            icon: "./img/dark/search.png",
+            callback: () => {
+                const wrapper = document.getElementById("search-wrapper");
+                if (wrapper) {
+                    const isHidden = wrapper.classList.toggle("hidden");
+                    toggleSearchInputButton.dom.toggleClass("active", !isHidden);
+                } else {
+                    console.warn("🔍 No se encontró el wrapper del input");
+                }
+            }
+        };
+        
         
 
         // let deleteTicketButton = {
@@ -359,6 +374,7 @@ class ButtonNav{
             editDinnersButton,
             fastProductsButton,
             kitchenMessageButton,
+            toggleSearchInputButton,
             tariffButton,
             //deleteTicketButton,
             kitchenButton,
@@ -402,7 +418,8 @@ class ButtonNav{
             calculatorButton,
             fastProductsButton,
             kitchenMessageButton,
-            searchProductButton, // 👈 Asegurate de incluirlo
+            searchProductButton, // 👈 Boton Search
+            toggleSearchInputButton, // 👈 Boton Toggle Search Input
             tariffButton,
             editDinnersButton
         ];

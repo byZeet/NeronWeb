@@ -383,11 +383,18 @@ class App {
         });
     }
 
-    onAddPlaces(param){
-        let places = this.masterDecoder.deserializePlaces(param);
+    onAddPlaces(param) {
+        const places = this.masterDecoder.deserializePlaces(param);
+        if (!places || places.size === 0) {
+            console.warn("⚠️ No se recibieron lugares desde el backend.");
+        } else {
+            console.log("✅ Lugares cargados:", places);
+        }
+    
         this.placeController.setPlaceMap(places);
         this.tableDecoder.setPlaceMap(places);
     }
+    
 
     onAddTables(tables){
         let tableModels = this.tableDecoder.decodeTables(tables);
@@ -589,22 +596,13 @@ class App {
     }
 
     onProductStock(args) {
-        // ⚠️ No actualizar stock acá, esto viene de una búsqueda por nombre
-        // Solo mostrar alerta si es una búsqueda
-        if (this.isProductSearchActive) {
-            this.isProductSearchActive = false;
+        // ⚠️ Solo procesamos si estamos en modo búsqueda
+        if (!this.isProductSearchActive) return;
+        this.isProductSearchActive = false;
     
-            if (!args || args.length === 0) {
-                this.modalController.alert(
-                    "Sin resultados", 
-                    `No se encontraron productos para: "${this.orderController.searchText ?? "?"}"`, 
-                    "Aceptar"
-                );
-                return;
-            }
+        const productos = [];
     
-            const productos = [];
-    
+        if (args && args.length > 0) {
             for (const p of args) {
                 const product = this.masterDecoder.productMap.get(p.Id);
                 if (!product) {
@@ -613,14 +611,15 @@ class App {
                 }
                 productos.push(product);
             }
-    
-            this.navigator.navigateTo({
-                type: Navigator.StateProduct,
-                controller: this.orderController,
-                products: productos
-            });
         }
+    
+        // Pasamos productos vacíos si no hubo resultados, y el panel mostrará mensaje
+        this.orderController.showProducts(productos, true);
     }
+    
+    
+    
+    
     
     
     

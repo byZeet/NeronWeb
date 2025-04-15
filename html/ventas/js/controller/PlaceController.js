@@ -15,32 +15,40 @@ class PlaceController {
 
     setPlaceMap(map) {
         this.placeMap = map;
-        let visiblePlaces = Array.from(map.values()).filter((place) => {
+
+        const visiblePlaces = Array.from(map.values()).filter((place) => {
             return !this.ignorePlaces.includes(place.id);
         });
+
         this.view.setPlaces(visiblePlaces);
     }
 
-    updatePlaceNotifications(placeIds){
-        if (!this.placeMap) return; // 👈 Protección contra null/undefined
-    
-        for(let place of this.placeMap.values()){
-            let hasNotification = placeIds.includes(place.id);
-            place.setHasNotifications(hasNotification);
+    updatePlaceNotifications(placeIds) {
+        if (!this.placeMap) {
+            console.warn("⚠️ placeMap no está definido todavía.");
+            return;
+        }
+
+        for (let place of this.placeMap.values()) {
+            const hasNotification = placeIds.includes(place.id);
+            if (typeof place.setHasNotifications === "function") {
+                place.setHasNotifications(hasNotification);
+            } else {
+                console.warn("⚠️ No se puede aplicar notificación en place:", place);
+            }
         }
     }
-    
 
     setView(view) {
         this.view = view;
     }
 
-    setOutput(output){
+    setOutput(output) {
         this.output = output;
     }
 
-    setSelectedTable(table){
-        this.selectedTabe = table;
+    setSelectedTable(table) {
+        this.selectedTable = table;
     }
 
     refresh() {
@@ -48,22 +56,15 @@ class PlaceController {
             this.output.getTables(this.selectedPlace.id);
         }
     }
-
+    
+    // Ordenamos las mesas por el campo "order" en orden ascendente
     setTables(tables) {
-        if (!this.view) {
-            return;
-        }
-        tables.sort((a,b)=>{
-            let aOrder = a.order;
-            let bOrder = b.order;
-            if(aOrder>bOrder){
-                return 1;
-            }
-            else if(aOrder<bOrder){
-                return -1;
-            }
-            return 0;
+        if (!this.view) return;
+
+        tables.sort((a, b) => {
+            return a.order - b.order;
         });
+
         this.view.addTables(tables);
     }
 
@@ -73,47 +74,47 @@ class PlaceController {
         this.output.getTables(place.id);
     }
 
-    setTableCallback(callback){
+    setTableCallback(callback) {
         this.tableCallback = callback;
     }
 
-    setBackCallback(callback){
+    setBackCallback(callback) {
         this.backCallback = callback;
     }
 
-    setUnblockCallback(callback){
+    setUnblockCallback(callback) {
         this.unblockCallback = callback;
     }
 
-    init(){
+    init() {
         this.blocked = false;
     }
 
     tableTouch(table) {
-        if(this.blocked){
-            return;
-        }
+        if (this.blocked) return;
+
         this.selectedTable = table;
         this.blocked = !this.tableCallback(table);
     }
 
-    block(block){
+    block(block) {
         this.blocked = true;
     }
 
-    goBack(){
-        if(!this.backCallback){
+    goBack() {
+        if (!this.backCallback) {
             this.navigator.goBack();
             return;
         }
         this.backCallback();
     }
 
-    unblock(response){
-        if(!this.unblockCallback){
+    unblock(response) {
+        if (!this.unblockCallback) {
             this.blocked = false;
             return;
         }
+
         this.blocked = false;
         this.unblockCallback(response, this.selectedTable);
     }

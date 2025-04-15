@@ -82,10 +82,12 @@ class OrderController {
         this.view.updateFamilies(visibleFamilies);
     }
 
-    showProducts(products) {
+    showProducts(products, fromSearch = false) {
         this.substate = Navigator.StateProduct;
-        this.view.updateProducts(products);
+        this._lastWasSearch = fromSearch;
+        this.view.updateProducts(products, fromSearch ? this.searchText : null);
     }
+    
 
     showCombinedProducts(combinedProducts) {
         this.substate = Navigator.StateCombinedProduct;
@@ -106,40 +108,6 @@ class OrderController {
 
     setView(view) {
         this.view = view;
-    
-        // setTimeout(() => {
-        //     const searchInput = document.getElementById("search");
-        //     if (searchInput) {
-        //         console.log("🧪 Input encontrado, conectando eventos...");
-    
-        //         // Enter
-        //         searchInput.addEventListener("keydown", (e) => {
-        //             if (e.key === "Enter") {
-        //                 const searchText = searchInput.value.trim();
-        //                 if (searchText.length > 1) {
-        //                     console.log("🔎 [ENTER] Buscando producto:", searchText);
-        //                     window.app.isProductSearchActive = true;
-        //                     this.searchText = searchText;
-        //                     this.buscarProductos(searchText);
-        //                     searchInput.value = "";
-        //                 }
-        //             }
-        //         });
-    
-        //         // En tiempo real
-        //         searchInput.addEventListener("input", () => {
-        //             const searchText = searchInput.value.trim();
-        //             if (searchText.length > 1) {
-        //                 console.log("🔍 [INPUT] Buscando producto:", searchText);
-        //                 window.app.isProductSearchActive = true;
-        //                 this.searchText = searchText;
-        //                 this.buscarProductos(searchText);
-        //             }
-        //         });
-        //     } else {
-        //         console.warn("⚠️ No se encontró el input de búsqueda.");
-        //     }
-        // }, 300); // Delay para asegurar que el DOM ya esté
     }
     
 
@@ -149,7 +117,6 @@ class OrderController {
 
     setOutput(output) {
         this.output = output;
-    
         this.output.onProductSearchResult = (products) => {
             console.log("✅ Recibí productos:", products); // <--- aquí ves si te llega del servidor
             this.navigator.navigateTo({
@@ -752,10 +719,15 @@ class OrderController {
     buscarProductos(searchText) {
         console.log("Buscando productos por:", searchText);
         this.searchText = searchText;
-        window.app.isProductSearchActive = true; // <- activamos la flag
+        window.app.isProductSearchActive = true;
+    
+        // Guardar el texto antes de buscar
+        this._lastSearchText = searchText;
+    
         this.output.searchProducts(searchText);
-        this._lastWasSearch = true; // marca que venimos de búsqueda
+        this._lastWasSearch = true;
     }
+    
     
     
     

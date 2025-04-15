@@ -1,66 +1,66 @@
-class Navigator{
+class Navigator {
 
-    constructor(){
+    constructor() {
         this.stateHistory = [];
         this.state = null;
     }
 
-    setControllerMap(map){
+    setControllerMap(map) {
         this.controllerMap = map;
     }
 
-    setRootPanel(rootPanel){
+    setRootPanel(rootPanel) {
         this.rootPanel = rootPanel;
     }
 
-    setButtonNav(buttonNav){
+    setButtonNav(buttonNav) {
         this.buttonNav = buttonNav;
     }
 
     newState(state) {
-        if(this.state!=null){
+        if (this.state != null) {
             this.stateHistory.push(this.state);
         }
         this.state = state;
     }
 
-    navigateTo(state){
+    navigateTo(state) {
         this.newState(state);
         this.switchTo(state, false);
     }
 
-    unwindUntil(check){
+    unwindUntil(check) {
         let state;
         let flag;
-        do{
+        do {
             state = this.stateHistory.pop();
             flag = !check(state);
-        } while(flag);
+        } while (flag);
         this.state = state;
         this.switchTo(state, true);
     }
 
-    goBack(){
+    goBack() {
         let prevState = this.stateHistory.pop();
         this.state = prevState;
         this.switchTo(prevState, true);
     }
 
-    hideButtons(hiddenButtons){
+    hideButtons(hiddenButtons) {
         this.buttonNav.showButtons(hiddenButtons);
     }
 
-    switchTo(state, backward){
+    switchTo(state, backward) {
         this.buttonNav.changeState(state.type);
-        if(state.controller){
+        if (state.controller) {
             this.controller = state.controller;
-        } else{
+        } else {
             this.controller = this.controllerMap.get(state.type);
         }
         this.rootPanel.switchState(state, this.controller);
-        switch(state.type){
+        switch (state.type) {
             case Navigator.StateOperator:
-                if(!backward){
+                if (!backward) {
                     this.toOperatorState(state);
                 }
                 break;
@@ -77,37 +77,37 @@ class Navigator{
                 this.toCombinedProductState(state);
                 break;
             case Navigator.StateTicket:
-                if(!backward){
+                if (!backward) {
                     this.toTicketState(state);
                 }
                 break;
             case Navigator.StateFastFood:
-                if(!backward){
+                if (!backward) {
                     this.toFastFoodState(state);
                 }
                 break;
             case Navigator.StateMenu:
-                if(!backward){
+                if (!backward) {
                     this.toMenuState(state);
                 }
                 break;
             case Navigator.StateCalificator:
-                if(!backward){
+                if (!backward) {
                     this.toCalificatorState(state);
                 }
                 break;
             case Navigator.StateMenuSelection:
-                if(!backward){
+                if (!backward) {
                     this.toMenuSelectionState(state);
                 }
                 break;
             case Navigator.StateClient:
-                if(!backward){
+                if (!backward) {
                     this.toClientState(state);
                 }
                 break;
             case Navigator.StateDemand:
-                if(!backward){
+                if (!backward) {
                     this.toDemandState(state);
                 }
                 break;
@@ -117,12 +117,12 @@ class Navigator{
         }
     }
 
-    toOperatorState(state){
+    toOperatorState(state) {
         let operators = state.operators;
         this.controller.setOperatorMap(operators);
     }
 
-    toPlaceState(state){
+    toPlaceState(state) {
         let title = state.title;
         let backCallback = state.backCallback;
         let unblockCallback = state.unblockCallback;
@@ -135,52 +135,52 @@ class Navigator{
         this.controller.setBackCallback(backCallback);
     }
 
-    toFamilyState(state){
+    toFamilyState(state) {
         let families = state.families;
         this.controller.setFastProductsFlag(false);
         this.controller.showFamilies(families);
     }
 
-    toProductState(state){
+    toProductState(state) {
         let products = state.products;
-        if(state.fastProducts){
+        if (state.fastProducts) {
             this.controller.setFastProductsFlag(true);
-        } else{
+        } else {
             this.controller.setFastProductsFlag(false);
         }
         this.controller.showProducts(products);
     }
 
-    toCombinedProductState(state){  
+    toCombinedProductState(state) {
         let products = state.products;
         this.controller.setFastProductsFlag(false);
         this.controller.showCombinedProducts(products);
     }
 
-    toTicketState(state){
-
+    toTicketState(state) {
+        // vacía por ahora
     }
 
-    toFastFoodState(state){
+    toFastFoodState(state) {
         let product = state.product;
         let quantity = state.quantity;
         let selections = state.selections;
         let calificators = state.calificators;
         let sendCallback = state.sendCallback;
-        if(calificators){
+        if (calificators) {
             this.controller.setCalificators(calificators);
-        } else{
+        } else {
             this.controller.setCalificators([]);
         }
         this.controller.setFastFood(product);
         this.controller.setQuantity(quantity);
         this.controller.setSendCallback(sendCallback);
-        if(selections){
+        if (selections) {
             this.controller.setStartingSelections(selections);
         }
     }
 
-    toMenuState(state){
+    toMenuState(state) {
         let product = state.product;
         let quantity = state.quantity;
         let selections = state.selections;
@@ -189,15 +189,15 @@ class Navigator{
         this.controller.setQuantity(quantity);
         this.controller.setMenu(product);
         this.controller.setSendCallback(sendCallback);
-        if(selections){
+        if (selections) {
             this.controller.setStartingSelections(selections);
         }
-        if(hiddenButtons){
+        if (hiddenButtons) {
             this.hideButtons(hiddenButtons);
         }
     }
 
-    toCalificatorState(state){
+    toCalificatorState(state) {
         let calificators = state.calificators;
         let obligatory = state.obligatory;
         let defaultGroup = state.defaultGroup;
@@ -206,15 +206,15 @@ class Navigator{
         this.controller.setSendCallback(sendCallback);
         this.controller.setStartingCalificators(calificators);
 
-        if(obligatory){
+        if (obligatory) {
             this.controller.setObligatory(obligatory);
-        } else{
+        } else {
             this.controller.setObligatory(false);
         }
-        
-        if(defaultGroup){
+
+        if (defaultGroup) {
             this.controller.setDefaultGroup(defaultGroup);
-        } else{
+        } else {
             this.controller.setDefaultGroup(0);
         }
 
@@ -222,7 +222,7 @@ class Navigator{
         this.controller.setDefaultGroup(null);
     }
 
-    toMenuSelectionState(state){
+    toMenuSelectionState(state) {
         let group = state.group;
         let selection = state.selection;
         let sendCallback = state.sendCallback;
@@ -230,37 +230,43 @@ class Navigator{
         this.controller.setSendCallback(sendCallback);
     }
 
-    toClientState(state){
+    toClientState(state) {
         let search = state.search;
         let callback = state.callback;
-        let controller = state.controller;
         this.controller.setSelectedClientCallback(callback);
         this.controller.setSearch(search);
     }
 
-    toDemandState(state){
+    toDemandState(state) {
         let lines = state.lines;
         let callback = state.sendCallback;
         let title = state.title;
         let hiddenButtons = state.hiddenButtons;
         let checkErrorCallback = state.checkErrorCallback;
-        let emptyAllowed = state.hasOwnProperty("emptyAllowed")?state.emptyAllowed:false;
+        let emptyAllowed = state.hasOwnProperty("emptyAllowed") ? state.emptyAllowed : false;
         this.rootPanel.setTitle(title);
         this.controller.setLines(lines);
         this.controller.setSendCallback(callback);
         this.controller.setCheckErrorCallback(checkErrorCallback);
         this.controller.setEmptyAllowed(emptyAllowed);
-        if(hiddenButtons){
+        if (hiddenButtons) {
             this.hideButtons(hiddenButtons);
         }
     }
 
-    toSaleClosingState(state, backward){
-        if(backward){
+    toSaleClosingState(state, backward) {
+        if (backward) {
             this.controller.resetButtons();
-        } else{
+        } else {
             this.controller.reset();
-        } 
+        }
+    }
+    
+    // 🔄 Devuelve el estado actual de navegación (pantalla activa del TPV)
+    // Usado para comprobar dónde está el usuario antes de hacer transiciones o mostrar vistas
+
+    getCurrentState() {
+        return this.state;
     }
 }
 

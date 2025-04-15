@@ -554,30 +554,40 @@
     left: 0;
     right: 0; }
 
-.operator-view {
-  padding: 5px;
-  position: relative;
-  border: 1px solid rgb(255, 255, 255);
-  box-shadow: 0px 0px 5px 1px black; 
-}
+    .operator-view {
+      position: relative;
+      border: 2px solid #ffffff; 
+      border-radius: 20px;
+      /* Si quieres que, al hacer “absolute” en el texto,
+         no se note lo que sobresale */
+      overflow: hidden; 
+      /* Deja padding si quieres algo de margen interno,
+         pero ten en cuenta que el texto, al ser absolute,
+         no se baja de forma “natural”. */
+      padding: 5px;
+    }
   .operator-view:active {
     transform: scale(0.95);
     box-shadow: inset 0px 0px 5px 2px rgba(0, 0, 0, 0.5); }
   .operator-view .operator-image {
     width: 100%;
     display: block; }
-  .operator-view .operator-name {
-    text-align: center;
-    font-weight: bold;
-    display: block;
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    background-color: #282828;
-    white-space: nowrap;
-    overflow: hidden;
-    padding: inherit; }
+    .operator-view .operator-name {
+      position: absolute;
+      bottom: 0; 
+      left: 0;
+      right: 0;
+      text-align: center;
+      font-weight: bold;
+      background-color: #282828;
+      color: #fff;
+      padding: 5px;
+      /* Para que no se extienda si el texto es muy largo */
+      white-space: nowrap; 
+      overflow: hidden;
+      text-overflow: ellipsis;
+      box-sizing: border-box;
+    }
 
 #place-panel .place-div {
   display: grid;
@@ -1053,7 +1063,7 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    padding: 4px;
+    /* padding: 4px;  PADDING DE LA IMAGEN DE LA FAMILIA  */
     text-align: center; }
   .family-view.without-image .family-image {
     display: none; }
@@ -1064,7 +1074,7 @@
     height: 82.5%;
     width: 100%;
     display: block;
-    border: 1px solid grey;
+    /* border: 1px solid grey; */
     background-color: white; }
   .family-view.with-image .family-description-wrapper {
     height: 17.5%;
@@ -1075,7 +1085,8 @@
   .family-view.with-image .family-description {
     overflow: hidden;
     text-overflow: ellipsis;
-    white-space: nowrap; }
+    white-space: nowrap;
+    padding: 10px; }
   .family-view.with-image.without-text .square-wrapper {
     padding-bottom: 4px; }
   .family-view.with-image.without-text .family-image {
@@ -1935,10 +1946,10 @@
   }
   
   .total-price {
-    color: #d4d4d4 !important;
+    color: #89b507 !important;
   }
   .euro-symbol {
-    color: #d4d4d4 !important;
+    color: #89b507 !important;
   }
 
   .product-price {
@@ -1948,6 +1959,16 @@
   .product-symbol {
     color: #b4b4b4 !important;
   }
+  
+
+  .no-results-message {
+    text-align: center;
+    padding: 1em;
+    font-size: 1.2em;
+    color: #aaa;
+    font-style: italic;
+}
+
 
 * {
   box-sizing: border-box;
