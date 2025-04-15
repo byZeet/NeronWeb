@@ -48,7 +48,7 @@ class ButtonNav{
 
         let backButton = {
             className: "back-button",
-            icon: "./img/dark/back-arrow.png",
+            icon: "./img/dark/volver-flecha.svg",
             callback: () => {
                 this.navigator.goBack();
             }
@@ -56,7 +56,7 @@ class ButtonNav{
 
         let controllerBackButton = {
             className: "back-button",
-            icon: "./img/dark/back-arrow.png",
+            icon: "./img/dark/volver-flecha.svg",
             callback: () => {
                 this.controller.goBack();
             }
@@ -72,7 +72,7 @@ class ButtonNav{
 
         let ticketButton = {
             className: "ticket-button",
-            icon: "./img/dark/ticket.png",
+            icon: "./img/dark/escritura.svg",
             callback: () => {
                 this.navigator.navigateTo({
                     type: Navigator.StateTicket
@@ -82,7 +82,7 @@ class ButtonNav{
 
         let groupButton = {
             className: "group-button",
-            icon: "./img/dark/group.png",
+            icon: "./img/dark/tenedor-y-cuchillo.svg",
             callback: ()=> {
                 this.modalController.askGroup((group)=>{
                     this.controller.setGroup(group);
@@ -100,7 +100,7 @@ class ButtonNav{
 
         let calculatorButton = {
             className: "calculator-button",
-            icon: "./img/dark/calculator.png",
+            icon: "./img/dark/calculadora.svg",
             callback: ()=> {
                 this.controller.askQuantity();
             }
@@ -130,6 +130,7 @@ class ButtonNav{
             }
         }
 
+        // ICONO DE OCULTAR SEARCH
         let searchProductButton = {
             className: "product-search-button",
             icon: "./img/dark/search.png",
@@ -140,7 +141,7 @@ class ButtonNav{
 
         let toggleSearchInputButton = {
             className: "toggle-search-input-button",
-            icon: "./img/dark/search.png",
+            icon: "./img/dark/lupa.svg",
             callback: () => {
                 if (this.controller && typeof this.controller.toggleSearchInputVisibility === "function") {
                     this.controller.toggleSearchInputVisibility();
@@ -354,7 +355,7 @@ class ButtonNav{
 
         this.popupButton = {
             className: "popup-button",
-            icon: "./img/dark/popup.png",
+            icon: "./img/dark/menu.svg",
             callback: ()=>{
                 this.showExtraButtons();
             }
