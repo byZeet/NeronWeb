@@ -142,18 +142,16 @@ class ButtonNav{
             className: "toggle-search-input-button",
             icon: "./img/dark/search.png",
             callback: () => {
-                const wrapper = document.getElementById("search-wrapper");
-                if (wrapper) {
-                    const isHidden = wrapper.classList.toggle("hidden");
-                    toggleSearchInputButton.dom.toggleClass("active", !isHidden);
+                if (this.controller && typeof this.controller.toggleSearchInputVisibility === "function") {
+                    this.controller.toggleSearchInputVisibility();
                 } else {
-                    console.warn("🔍 No se encontró el wrapper del input");
+                    console.warn("⚠️ El controlador no tiene toggleSearchInputVisibility");
                 }
             }
         };
         
         
-
+        
         // let deleteTicketButton = {
         //     className: "delete-ticket-button",
         //     icon: "./img/dark/delete-ticket.png",

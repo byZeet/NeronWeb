@@ -109,6 +109,16 @@ class OrderController {
     setView(view) {
         this.view = view;
     }
+
+    // BOTÓN VISIBILIDAD BUSCADOR
+    toggleSearchInputVisibility() {
+        if (this.view && typeof this.view.toggleSearchInputVisibility === "function") {
+            this.view.toggleSearchInputVisibility();
+        } else {
+            console.warn("❌ La vista no tiene toggleSearchInputVisibility");
+        }
+    }
+    
     
 
     setMultiTariff(multiTariff){

@@ -11,22 +11,22 @@ class OrderPanel{
 
     constructor(){
         this.dom = $(orderPanelTemplate);
-
+    
         if(GlobalParameters.APPLE){
             this.dom.addClass("apple");
         }
-
+    
         this.familyDom = this.dom.find(".family-panel");
         this.productDom = this.dom.find(".family-panel");
-
+    
         this.ticketInfo = new TicketInfoView(this.dom.find(".ticket-info"));
-        this.searchInput = null; // 🔹 Referencia al input de búsqueda
-
-        this.noResults = $("<div>").addClass("no-results-message hidden"); // lo ocultamos por defecto
-        this.productDom.after(this.noResults); // lo agregamos justo después del panel de productos
-
-
-    } 
+        this.searchInput = null;      // 🔹 Referencia al input de búsqueda
+        this.searchWrapper = null;    // 🔹 Contenedor del input de búsqueda
+    
+        this.noResults = $("<div>").addClass("no-results-message hidden");
+        this.productDom.after(this.noResults);
+    }
+    
 
     setController(controller){
         this.controller = controller;
@@ -181,43 +181,54 @@ class OrderPanel{
     
     // 🔍 Agrega este método justo aquí:
     initSearchInput(controller) {
-        this.searchInput = this.dom.find("#search"); // 🔹 Guardamos referencia
+        // Esperamos a que se monte el DOM por completo
+        setTimeout(() => {
+            this.searchInput = this.dom.find("#search");
+            this.searchWrapper = this.dom.find(".search-products-wrapper");
     
-        if (this.searchInput.length === 0) {
-            console.warn("❌ No se encontró el input de búsqueda.");
-            return;
-        }
-    
-        this.searchInput.on("input", () => {
-            const value = this.searchInput.val().trim();
-        
-            if (value.length > 1) {
-                window.app.isProductSearchActive = true;
-                controller.searchText = value;
-                controller.buscarProductos(value);
-            } else {
-                // 🔙 Si se borra el input, mostrar familias principales
-                controller.showFamilies(); 
+            if (this.searchWrapper.length === 0) {
+                console.warn("❌ No se encontró el contenedor del input de búsqueda.");
+                return;
             }
-        });
-        
     
-        this.searchInput.on("keydown", (e) => {
-            if (e.key === "Enter") {
+            // 🧠 Restaurar visibilidad desde localStorage
+            const stored = localStorage.getItem("searchInputHidden");
+            if (stored === "true") {
+                this.searchWrapper.addClass("hidden");
+            }
+    
+            if (this.searchInput.length === 0) {
+                console.warn("❌ No se encontró el input de búsqueda.");
+                return;
+            }
+    
+            this.searchInput.on("input", () => {
                 const value = this.searchInput.val().trim();
                 if (value.length > 1) {
                     window.app.isProductSearchActive = true;
                     controller.searchText = value;
                     controller.buscarProductos(value);
-                    this.searchInput.val("");
-        
-                    // 🔻 Quitar foco tras pulsar Enter
-                    this.searchInput.blur();
+                } else {
+                    controller.showFamilies();
                 }
-            }
-        });
-        
+            });
+    
+            this.searchInput.on("keydown", (e) => {
+                if (e.key === "Enter") {
+                    const value = this.searchInput.val().trim();
+                    if (value.length > 1) {
+                        window.app.isProductSearchActive = true;
+                        controller.searchText = value;
+                        controller.buscarProductos(value);
+                        this.searchInput.val("");
+                        this.searchInput.blur();
+                    }
+                }
+            });
+        }, 0); // 🔄 aseguramos ejecución tras renderizado
     }
+    
+    
     
     clearSearchInput() {
         const input = this.dom.find("#search");
@@ -228,17 +239,23 @@ class OrderPanel{
     }
 
     toggleSearchInputVisibility() {
-        if (!this.searchInput) {
-            console.warn("❌ No se ha inicializado el input de búsqueda.");
+        if (!this.searchWrapper || this.searchWrapper.length === 0) {
+            console.warn("❌ No se encontró el contenedor del input de búsqueda.");
             return;
         }
     
-        this.searchInput.toggleClass("hidden");
+        const isHidden = this.searchWrapper.toggleClass("hidden").hasClass("hidden");
     
-        if (!this.searchInput.hasClass("hidden")) {
-            this.searchInput.focus(); // opcional
+        // ✅ Guarda el valor en localStorage
+        localStorage.setItem("searchInputHidden", isHidden ? "true" : "false");
+    
+        if (!isHidden && this.searchInput) {
+            this.searchInput.focus();
         }
     }
+    
+    
+    
     
         
 
