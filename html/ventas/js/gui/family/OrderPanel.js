@@ -226,6 +226,20 @@ class OrderPanel{
             input.focus(); // opcional: dejar el foco si quieres
         }
     }
+
+    toggleSearchInputVisibility() {
+        if (!this.searchInput) {
+            console.warn("❌ No se ha inicializado el input de búsqueda.");
+            return;
+        }
+    
+        this.searchInput.toggleClass("hidden");
+    
+        if (!this.searchInput.hasClass("hidden")) {
+            this.searchInput.focus(); // opcional
+        }
+    }
+    
         
 
 }

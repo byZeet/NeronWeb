@@ -145,7 +145,6 @@ class OpenTableController {
         return true;
     }
 
-    
     switchState(){
         this.navigator.navigateTo({
             type: Navigator.StatePlace,
